@@ -479,7 +479,7 @@
 			clocks = <&aonsys_clk>;
 		};
 
-		gpio@fffff52000 {
+		ao_gpio1: gpio@fffff52000 {
 			compatible = "snps,dw-apb-gpio";
 			reg = <0xff 0xfff52000 0x0 0x1000>;
 			#address-cells = <1>;
