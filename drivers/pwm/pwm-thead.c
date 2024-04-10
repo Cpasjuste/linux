@@ -180,7 +180,6 @@ static int thead_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
 static const struct pwm_ops thead_pwm_ops = {
 	.apply = thead_pwm_apply,
 	.get_state = thead_pwm_get_state,
-	.owner = THIS_MODULE,
 };
 
 static int __maybe_unused thead_pwm_runtime_suspend(struct device *dev)
@@ -231,10 +230,11 @@ static int thead_pwm_probe(struct platform_device *pdev)
 	/* check whether PWM is ever started or not */
 	for (i = 0; i < priv->chip.npwm; i++) {
 		val = readl(priv->mmio_base + THEAD_PWM_FP(i));
-		if (val)
+		if (val){
 			priv->channel_ever_started |= 1 << i;
+			pm_runtime_get(&pdev->dev);
+		}
 	}
-
 	ret = devm_pwmchip_add(&pdev->dev, &priv->chip);
 	if (ret)
 		return ret;

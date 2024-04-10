@@ -79,3 +79,15 @@
 &uart0 {
 	status = "okay";
 };
+
+&gpio2 {
+	status = "okay";
+};
+
+&pwm {
+	status = "okay";
+};
+
+&adc {
+	status = "okay";
+};
