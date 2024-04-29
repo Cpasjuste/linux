@@ -236,16 +236,6 @@
 	status = "okay";
 };
 
-&pwm {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pwm_pins>;
-	status = "okay";
-};
-
-&adc {
-	status = "okay";
-};
-
 &i2c0 {
 	status = "okay";
 	clock-frequency = <100000>;
