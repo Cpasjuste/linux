@@ -137,6 +137,46 @@
 	};
 };
 
+&padctrl1_apsys {
+	i2c0_pins: i2c0-0 {
+		i2c-pins {
+			pins = "I2C0_SDA",
+			       "I2C0_SCL";
+			function = "i2c";
+			bias-pull-up = <2100>;
+			drive-strength = <7>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+
+	i2c4_pins: i2c4-0 {
+		i2c-pins {
+			pins = "GPIO0_19", /*I2C4_SDA*/
+			       "GPIO0_18"; /*I2C4_SCL*/
+			function = "i2c";
+			bias-pull-up = <2100>;
+			drive-strength = <7>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+
+	i2c5_pins: i2c5-0 {
+		i2c-pins {
+			pins = "QSPI1_D0_MOSI", /*I2C5_SDA*/
+			       "QSPI1_CSN0";    /*I2C5_SCL*/
+			function = "i2c";
+			bias-pull-up = <2100>;
+			drive-strength = <7>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+};
 &padctrl0_apsys {
 	uart0_pins: uart0-0 {
 		tx-pins {
@@ -159,6 +199,31 @@
 			slew-rate = <0>;
 		};
 	};
+
+	pwm_pins: pwm-0 {
+		pwm0-pins {
+			pins = "QSPI0_SCLK";
+			function = "pwm";
+			bias-disable;
+			drive-strength = <1>;
+			input-disable;
+			input-schmitt-disable;
+			slew-rate = <0>;
+		};
+	};
+
+	i2c2_pins: i2c2-0 {
+		i2c-pins {
+			pins = "I2C2_SDA",
+			       "I2C2_SCL";
+			function = "i2c";
+			bias-pull-up = <2100>;
+			drive-strength = <7>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
 };
 
 &uart0 {
@@ -167,9 +232,15 @@
 	status = "okay";
 };
 
+&gpio2 {
+	status = "okay";
+};
+
 &i2c0 {
 	status = "okay";
 	clock-frequency = <100000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c0_pins>;
 
 	eeprom: eeprom@50 {
 		compatible = "atmel,24c32";
@@ -179,12 +250,27 @@
 
 &i2c2 {
 	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c2_pins>;
 };
 
 &i2c4 {
 	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c4_pins>;
 };
 
 &i2c5 {
 	status = "okay";
+	clock-frequency = <100000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c5_pins>;
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	nunchuk: joystick@52 {
+		compatible = "nintendo,nunchuk";
+		reg = <0x52>;
+	};
 };
