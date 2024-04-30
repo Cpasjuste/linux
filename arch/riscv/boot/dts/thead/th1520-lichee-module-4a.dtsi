@@ -33,10 +33,6 @@
 	clock-frequency = <62500000>;
 };
 
-&sdhci_clk {
-	clock-frequency = <198000000>;
-};
-
 &aogpio {
 	gpio-line-names = "", "", "",
 			  "GPIO00",
