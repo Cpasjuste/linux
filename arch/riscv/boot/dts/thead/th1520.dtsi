@@ -154,12 +154,6 @@
 		#clock-cells = <0>;
 	};
 
-	i2c_ic_clk: i2c-clock {
-		compatible = "fixed-clock";
-		clock-frequency = <50000000>;
-		#clock-cells = <0>;
-	};
-
 	soc {
 		compatible = "simple-bus";
 		interrupt-parent = <&plic>;
@@ -281,7 +275,7 @@
 			compatible = "thead,th1520-i2c", "snps,designware-i2c";
 			reg = <0xff 0xe7f20000 0x0 0x4000>;
 			interrupts = <44 IRQ_TYPE_LEVEL_HIGH>;
-			clocks = <&i2c_ic_clk>;
+			clocks = <&clk CLK_I2C0>;
 			#address-cells = <1>;
 			#size-cells = <0>;
 			status = "disabled";
@@ -291,7 +285,7 @@
 			compatible = "thead,th1520-i2c", "snps,designware-i2c";
 			reg = <0xff 0xe7f24000 0x0 0x4000>;
 			interrupts = <45 IRQ_TYPE_LEVEL_HIGH>;
-			clocks = <&i2c_ic_clk>;
+			clocks = <&clk CLK_I2C1>;
 			#address-cells = <1>;
 			#size-cells = <0>;
 			status = "disabled";
@@ -301,7 +295,7 @@
 			compatible = "thead,th1520-i2c", "snps,designware-i2c";
 			reg = <0xff 0xe7f28000 0x0 0x4000>;
 			interrupts = <48 IRQ_TYPE_LEVEL_HIGH>;
-			clocks = <&i2c_ic_clk>;
+			clocks = <&clk CLK_I2C4>;
 			#address-cells = <1>;
 			#size-cells = <0>;
 			status = "disabled";
@@ -380,7 +374,7 @@
 			compatible = "thead,th1520-i2c", "snps,designware-i2c";
 			reg = <0xff 0xec00c000 0x0 0x4000>;
 			interrupts = <46 IRQ_TYPE_LEVEL_HIGH>;
-			clocks = <&i2c_ic_clk>;
+			clocks = <&clk CLK_I2C2>;
 			#address-cells = <1>;
 			#size-cells = <0>;
 			status = "disabled";
@@ -401,7 +395,7 @@
 			compatible = "thead,th1520-i2c", "snps,designware-i2c";
 			reg = <0xff 0xec014000 0x0 0x4000>;
 			interrupts = <47 IRQ_TYPE_LEVEL_HIGH>;
-			clocks = <&i2c_ic_clk>;
+			clocks = <&clk CLK_I2C3>;
 			#address-cells = <1>;
 			#size-cells = <0>;
 			status = "disabled";
@@ -485,7 +479,7 @@
 			compatible = "thead,th1520-i2c", "snps,designware-i2c";
 			reg = <0xff 0xf7f2c000 0x0 0x4000>;
 			interrupts = <49 IRQ_TYPE_LEVEL_HIGH>;
-			clocks = <&i2c_ic_clk>;
+			clocks = <&clk CLK_I2C5>;
 			#address-cells = <1>;
 			#size-cells = <0>;
 			status = "disabled";
