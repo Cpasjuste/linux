@@ -286,7 +286,7 @@
 		padctrl1_apsys: pinctrl@ffe7f3c000 {
 			compatible = "thead,th1520-group2-pinctrl";
 			reg = <0xff 0xe7f3c000 0x0 0x1000>;
-			clocks = <&apb_clk>;
+			clocks = <&clk CLK_PADCTRL1>;
 		};
 
 		gpio@ffec005000 {
@@ -330,8 +330,8 @@
 		padctrl0_apsys: pinctrl@ffec007000 {
 			compatible = "thead,th1520-group3-pinctrl";
 			reg = <0xff 0xec007000 0x0 0x1000>;
-			clocks = <&apb_clk>;
-		};
+			clocks = <&clk CLK_PADCTRL0>;
+};
 
 		uart2: serial@ffec010000 {
 			compatible = "snps,dw-apb-uart";
@@ -476,7 +476,7 @@
 		padctrl_aosys: pinctrl@fffff4a000 {
 			compatible = "thead,th1520-group1-pinctrl";
 			reg = <0xff 0xfff4a000 0x0 0x2000>;
-			clocks = <&aonsys_clk>;
+			clocks = <&clk CLK_AON2CPU_A2X>;
 		};
 
 		ao_gpio1: gpio@fffff52000 {
