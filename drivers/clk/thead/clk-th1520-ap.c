@@ -72,12 +72,12 @@ struct ccu_mdiv {
 		.flags	= _flags,					\
 	}
 
-#define CCU_GATE(_struct, _name, _parent, _reg, _gate, _flags)		\
+#define CCU_GATE(_struct, _name, _parent, _reg, _gate, _flags)	\
 	struct ccu_gate _struct = {					\
 		.enable	= _gate,					\
 		.common	= {						\
 			.reg		= _reg,				\
-			.hw.init	= CLK_HW_INIT(_name,		\
+			.hw.init	= CLK_HW_INIT_PARENTS_DATA(_name,\
 						      _parent,		\
 						      &ccu_gate_ops,	\
 						      _flags),		\
@@ -159,7 +159,7 @@ static const struct clk_ops ccu_mux_ops = {
 	.determine_rate	= __clk_mux_determine_rate,
 };
 
-void ccu_disable_helper(struct ccu_common *common, u32 gate)
+static void ccu_disable_helper(struct ccu_common *common, u32 gate)
 {
 	if (!gate)
 		return;
@@ -168,7 +168,7 @@ void ccu_disable_helper(struct ccu_common *common, u32 gate)
 			   gate, ~gate);
 }
 
-int ccu_enable_helper(struct ccu_common *common, u32 gate)
+static int ccu_enable_helper(struct ccu_common *common, u32 gate)
 {
 	if (!gate)
 		return 0;
@@ -347,6 +347,10 @@ static struct ccu_mdiv gmac_pll_clk = {
 	},
 };
 
+static const struct clk_parent_data gmac_pll_clk_parent_data[] = {
+	{ .hw = &gmac_pll_clk.common.hw }
+};
+
 static struct ccu_mdiv video_pll_clk = {
 	.m		= TH_CCU_ARG(8, 12),
 	.d		= TH_CCU_ARG(24, 3),
@@ -360,6 +364,13 @@ static struct ccu_mdiv video_pll_clk = {
 	},
 };
 
+<<<<<<< HEAD
+=======
+static const struct clk_parent_data video_pll_clk_parent_data[] = {
+	{ .hw = &video_pll_clk.common.hw }
+};
+
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 static struct ccu_mdiv dpu0_pll_clk = {
 	.m		= TH_CCU_ARG(8, 12),
 	.d		= TH_CCU_ARG(24, 3),
@@ -373,6 +384,13 @@ static struct ccu_mdiv dpu0_pll_clk = {
 	},
 };
 
+<<<<<<< HEAD
+=======
+static const struct clk_parent_data dpu0_pll_clk_parent_data[] = {
+	{ .hw = &dpu0_pll_clk.common.hw }
+};
+
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 static struct ccu_mdiv dpu1_pll_clk = {
 	.m		= TH_CCU_ARG(8, 12),
 	.d		= TH_CCU_ARG(24, 3),
@@ -386,6 +404,13 @@ static struct ccu_mdiv dpu1_pll_clk = {
 	},
 };
 
+<<<<<<< HEAD
+=======
+static const struct clk_parent_data dpu1_pll_clk_parent_data[] = {
+	{ .hw = &dpu1_pll_clk.common.hw }
+};
+
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 static struct ccu_mdiv tee_pll_clk = {
 	.m		= TH_CCU_ARG(8, 12),
 	.d		= TH_CCU_ARG(24, 3),
@@ -400,6 +425,10 @@ static struct ccu_mdiv tee_pll_clk = {
 };
 
 static const char * const c910_i0_parents[] = { "cpu-pll0", "osc_24m" };
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 struct ccu_mux c910_i0_clk = {
 	.mux	= TH_CCU_ARG(1, 1),
 	.common	= {
@@ -411,24 +440,39 @@ struct ccu_mux c910_i0_clk = {
 	}
 };
 
+<<<<<<< HEAD
 static const char * const c910_parents[] = { "c910-i0", "cpu-pll1" };
+=======
+static const struct clk_parent_data c910_parents[] = {
+	{ .hw = &c910_i0_clk.common.hw },
+	{ .hw = &cpu_pll1_clk.common.hw }
+};
+
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 struct ccu_mux c910_clk = {
 	.mux	= TH_CCU_ARG(0, 1),
 	.common	= {
 		.reg		= 0x100,
+<<<<<<< HEAD
 		.hw.init	= CLK_HW_INIT_PARENTS("c910",
+=======
+		.hw.init	= CLK_HW_INIT_PARENTS_DATA("c910",
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 					      c910_parents,
 					      &ccu_mux_ops,
 					      0),
 	}
 };
 
+<<<<<<< HEAD
 static CCU_GATE(brom_clk, "brom", "ahb2-cpusys-hclk",
 		0x100, BIT(4), 0);
 
 static CCU_GATE(bmu_clk, "bmu", "axi4-cpusys2-aclk",
 		0x100, BIT(5), 0);
 
+=======
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 static const char * const ahb2_cpusys_parents[] = { "gmac-pll", "osc_24m" };
 static struct ccu_div ahb2_cpusys_hclk = {
 	.div		= TH_CCU_DIV_FLAGS(0, 3, CLK_DIVIDER_ONE_BASED),
@@ -442,32 +486,77 @@ static struct ccu_div ahb2_cpusys_hclk = {
 	},
 };
 
+<<<<<<< HEAD
+=======
+static const struct clk_parent_data ahb2_cpusys_hclk_parent_data[] = {
+	{ .hw = &ahb2_cpusys_hclk.common.hw }
+};
+
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 static struct ccu_div apb3_cpusys_pclk = {
 	.div		= TH_CCU_ARG(0, 3),
 	.common		= {
 		.reg		= 0x130,
+<<<<<<< HEAD
 		.hw.init	= CLK_HW_INIT("apb3-cpusys-pclk", "ahb2-cpusys-hclk",
 					      &ccu_div_ops,
 					      0),
 	},
 };
 
+=======
+		.hw.init	= CLK_HW_INIT_PARENTS_DATA("apb3-cpusys-pclk",
+							   ahb2_cpusys_hclk_parent_data,
+							   &ccu_div_ops,
+							   0),
+	},
+};
+
+static const struct clk_parent_data apb3_cpusys_pclk_parent_data[] = {
+	{ .hw = &apb3_cpusys_pclk.common.hw }
+};
+
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 static struct ccu_div axi4_cpusys2_aclk = {
 	.div		= TH_CCU_DIV_FLAGS(0, 3, CLK_DIVIDER_ONE_BASED),
 	.common		= {
 		.reg		= 0x134,
+<<<<<<< HEAD
 		.hw.init	= CLK_HW_INIT("axi4-cpusys2-aclk", "gmac-pll",
+=======
+		.hw.init	= CLK_HW_INIT_PARENTS_DATA("axi4-cpusys2-aclk",
+					      gmac_pll_clk_parent_data,
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 					      &ccu_div_ops,
 					      0),
 	},
 };
 
+<<<<<<< HEAD
 static CCU_GATE(aon2cpu_a2x_clk, "aon2cpu-a2x", "axi4-cpusys2-aclk",
 		0x134, BIT(8), 0);
 
 static CCU_GATE(x2x_cpusys_clk, "x2x-cpusys", "axi4-cpusys2-aclk",
 		0x134, BIT(7), 0);
 
+=======
+static const struct clk_parent_data axi4_cpusys2_aclk_parent_data[] = {
+	{ .hw = &axi4_cpusys2_aclk.common.hw }
+};
+
+static CCU_GATE(aon2cpu_a2x_clk, "aon2cpu-a2x", axi4_cpusys2_aclk_parent_data,
+		0x134, BIT(8), 0);
+
+static CCU_GATE(x2x_cpusys_clk, "x2x-cpusys", axi4_cpusys2_aclk_parent_data,
+		0x134, BIT(7), 0);
+
+static CCU_GATE(brom_clk, "brom", ahb2_cpusys_hclk_parent_data,
+		0x100, BIT(4), 0);
+
+static CCU_GATE(bmu_clk, "bmu", axi4_cpusys2_aclk_parent_data,
+		0x100, BIT(5), 0);
+
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 static const char * const axi_parents[] = { "video-pll", "osc_24m" };
 static struct ccu_div axi_aclk = {
 	.div		= TH_CCU_DIV_FLAGS(0, 4, CLK_DIVIDER_ONE_BASED),
@@ -481,7 +570,15 @@ static struct ccu_div axi_aclk = {
 	},
 };
 
+<<<<<<< HEAD
 static CCU_GATE(cpu2aon_x2h_clk, "cpu2aon-x2h", "axi-aclk",
+=======
+static const struct clk_parent_data axi_aclk_parent_data[] = {
+	{ .hw = &axi_aclk.common.hw }
+};
+
+static CCU_GATE(cpu2aon_x2h_clk, "cpu2aon-x2h", axi_aclk_parent_data,
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 		0x138, BIT(8), 0);
 
 static const char * const perisys_ahb_hclk_parents[] = { "gmac-pll", "osc_24m" };
@@ -498,30 +595,56 @@ static struct ccu_div perisys_ahb_hclk = {
 	},
 };
 
+<<<<<<< HEAD
 static CCU_GATE(cpu2peri_x2h_clk, "cpu2peri-x2h", "axi4-cpusys2-aclk",
+=======
+static const struct clk_parent_data perisys_ahb_hclk_parent_data[] = {
+	{ .hw = &perisys_ahb_hclk.common.hw }
+};
+
+static CCU_GATE(cpu2peri_x2h_clk, "cpu2peri-x2h", axi4_cpusys2_aclk_parent_data,
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 		0x140, BIT(9), 0);
 
 static struct ccu_div perisys_apb_pclk = {
 	.div		= TH_CCU_ARG(0, 3),
 	.common		= {
 		.reg		= 0x150,
+<<<<<<< HEAD
 		.hw.init	= CLK_HW_INIT("perisys-apb-pclk", "perisys-ahb-hclk",
+=======
+		.hw.init	= CLK_HW_INIT_PARENTS_DATA("perisys-apb-pclk",
+					      perisys_ahb_hclk_parent_data,
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 					      &ccu_div_ops,
 					      0),
 	},
 };
 
+<<<<<<< HEAD
+=======
+static const struct clk_parent_data perisys_apb_pclk_parent_data[] = {
+	{ .hw = &perisys_apb_pclk.common.hw }
+};
+
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 static struct ccu_div peri2sys_apb_pclk = {
 	.div		= TH_CCU_DIV_FLAGS(4, 3, CLK_DIVIDER_ONE_BASED),
 	.common		= {
 		.reg		= 0x150,
+<<<<<<< HEAD
 		.hw.init	= CLK_HW_INIT("peri2sys-apb-pclk",
 					      "gmac-pll",
+=======
+		.hw.init	= CLK_HW_INIT_PARENTS_DATA("peri2sys-apb-pclk",
+					      gmac_pll_clk_parent_data,
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 					      &ccu_div_ops,
 					      0),
 	},
 };
 
+<<<<<<< HEAD
 static CCU_GATE(perisys_apb1_hclk, "perisys-apb1-hclk", "perisys-ahb-hclk",
 		0x150, BIT(9), 0);
 
@@ -532,6 +655,22 @@ static CCU_GATE(perisys_apb3_hclk, "perisys-apb3-hclk", "perisys-ahb-hclk",
 		0x150, BIT(11), 0);
 
 static CCU_GATE(perisys_apb4_hclk, "perisys-apb4-hclk", "perisys-ahb-hclk",
+=======
+static const struct clk_parent_data peri2sys_apb_pclk_parent_data[] = {
+	{ .hw = &peri2sys_apb_pclk.common.hw }
+};
+
+static CCU_GATE(perisys_apb1_hclk, "perisys-apb1-hclk", perisys_ahb_hclk_parent_data,
+		0x150, BIT(9), 0);
+
+static CCU_GATE(perisys_apb2_hclk, "perisys-apb2-hclk", perisys_ahb_hclk_parent_data,
+		0x150, BIT(10), 0);
+
+static CCU_GATE(perisys_apb3_hclk, "perisys-apb3-hclk", perisys_ahb_hclk_parent_data,
+		0x150, BIT(11), 0);
+
+static CCU_GATE(perisys_apb4_hclk, "perisys-apb4-hclk", perisys_ahb_hclk_parent_data,
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 		0x150, BIT(12), 0);
 
 static CLK_FIXED_FACTOR_FW_NAME(osc12m_clk, "osc_12m", "osc_24m", 2, 1, 0);
@@ -604,29 +743,50 @@ static struct ccu_div apb_pclk = {
 	},
 };
 
+<<<<<<< HEAD
 static const char * const npu_parents[] = { "gmac-pll", "video-pll" };
+=======
+static const struct clk_parent_data npu_parents[] = {
+	{ .hw = &gmac_pll_clk.common.hw },
+	{ .hw = &video_pll_clk.common.hw }
+};
+
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 static struct ccu_div npu_clk = {
 	.enable		= BIT(4),
 	.div		= TH_CCU_DIV_FLAGS(0, 3, CLK_DIVIDER_ONE_BASED),
 	.mux		= TH_CCU_ARG(6, 1),
 	.common		= {
 		.reg		= 0x1c8,
+<<<<<<< HEAD
 		.hw.init	= CLK_HW_INIT_PARENTS("npu",
+=======
+		.hw.init	= CLK_HW_INIT_PARENTS_DATA("npu",
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 						      npu_parents,
 						      &ccu_div_ops,
 						      0),
 	},
 };
 
+<<<<<<< HEAD
 static CCU_GATE(npu_axi_clk, "npu-axi", "npu-ahb",
+=======
+static CCU_GATE(npu_axi_clk, "npu-axi", axi_aclk_parent_data,
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 		0x1c8, BIT(5), 0);
 
 static struct ccu_div vi_clk = {
 	.div		= TH_CCU_DIV_FLAGS(16, 4, CLK_DIVIDER_ONE_BASED),
 	.common		= {
 		.reg		= 0x1d0,
+<<<<<<< HEAD
 		.hw.init	= CLK_HW_INIT("vi",
 					      "video-pll",
+=======
+		.hw.init	= CLK_HW_INIT_PARENTS_DATA("vi",
+					      video_pll_clk_parent_data,
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 					      &ccu_div_ops,
 					      0),
 	},
@@ -636,8 +796,13 @@ static struct ccu_div vi_ahb_clk = {
 	.div		= TH_CCU_DIV_FLAGS(0, 4, CLK_DIVIDER_ONE_BASED),
 	.common		= {
 		.reg		= 0x1d0,
+<<<<<<< HEAD
 		.hw.init	= CLK_HW_INIT("vi-ahb",
 					      "video-pll",
+=======
+		.hw.init	= CLK_HW_INIT_PARENTS_DATA("vi-ahb",
+					      video_pll_clk_parent_data,
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 					      &ccu_div_ops,
 					      0),
 	},
@@ -648,8 +813,13 @@ static struct ccu_div vo_axi_clk = {
 	.div		= TH_CCU_DIV_FLAGS(0, 4, CLK_DIVIDER_ONE_BASED),
 	.common		= {
 		.reg		= 0x1dc,
+<<<<<<< HEAD
 		.hw.init	= CLK_HW_INIT("vo-axi",
 					      "video-pll",
+=======
+		.hw.init	= CLK_HW_INIT_PARENTS_DATA("vo-axi",
+					      video_pll_clk_parent_data,
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 					      &ccu_div_ops,
 					      0),
 	},
@@ -659,8 +829,13 @@ static struct ccu_div vp_apb_clk = {
 	.div		= TH_CCU_DIV_FLAGS(0, 3, CLK_DIVIDER_ONE_BASED),
 	.common		= {
 		.reg		= 0x1e0,
+<<<<<<< HEAD
 		.hw.init	= CLK_HW_INIT("vp-apb",
 					      "gmac-pll",
+=======
+		.hw.init	= CLK_HW_INIT_PARENTS_DATA("vp-apb",
+					      gmac_pll_clk_parent_data,
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 					      &ccu_div_ops,
 					      0),
 	},
@@ -671,14 +846,23 @@ static struct ccu_div vp_axi_clk = {
 	.div		= TH_CCU_DIV_FLAGS(8, 4, CLK_DIVIDER_ONE_BASED),
 	.common		= {
 		.reg		= 0x1e0,
+<<<<<<< HEAD
 		.hw.init	= CLK_HW_INIT("vp-axi",
 					      "video-pll",
+=======
+		.hw.init	= CLK_HW_INIT_PARENTS_DATA("vp-axi",
+					      video_pll_clk_parent_data,
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 					      &ccu_div_ops,
 					      0),
 	},
 };
 
+<<<<<<< HEAD
 static CCU_GATE(cpu2vp_clk, "cpu2vp", "axi-aclk",
+=======
+static CCU_GATE(cpu2vp_clk, "cpu2vp", axi_aclk_parent_data,
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 		0x1e0, BIT(13), 0);
 
 static struct ccu_div venc_clk = {
@@ -686,8 +870,13 @@ static struct ccu_div venc_clk = {
 	.div		= TH_CCU_DIV_FLAGS(0, 3, CLK_DIVIDER_ONE_BASED),
 	.common		= {
 		.reg		= 0x1e4,
+<<<<<<< HEAD
 		.hw.init	= CLK_HW_INIT("venc",
 					      "gmac-pll",
+=======
+		.hw.init	= CLK_HW_INIT_PARENTS_DATA("venc",
+					      gmac_pll_clk_parent_data,
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 					      &ccu_div_ops,
 					      0),
 	},
@@ -697,8 +886,13 @@ static struct ccu_div dpu0_clk = {
 	.div		= TH_CCU_DIV_FLAGS(0, 8, CLK_DIVIDER_ONE_BASED),
 	.common		= {
 		.reg		= 0x1e8,
+<<<<<<< HEAD
 		.hw.init	= CLK_HW_INIT("dpu0",
 					      "dpu0-pll",
+=======
+		.hw.init	= CLK_HW_INIT_PARENTS_DATA("dpu0",
+					      dpu0_pll_clk_parent_data,
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 					      &ccu_div_ops,
 					      0),
 	},
@@ -708,13 +902,19 @@ static struct ccu_div dpu1_clk = {
 	.div		= TH_CCU_DIV_FLAGS(0, 8, CLK_DIVIDER_ONE_BASED),
 	.common		= {
 		.reg		= 0x1ec,
+<<<<<<< HEAD
 		.hw.init	= CLK_HW_INIT("dpu1",
 					      "dpu1-pll",
+=======
+		.hw.init	= CLK_HW_INIT_PARENTS_DATA("dpu1",
+					      dpu1_pll_clk_parent_data,
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 					      &ccu_div_ops,
 					      0),
 	},
 };
 
+<<<<<<< HEAD
 static CCU_GATE(emmc_sdio_clk, "emmc-sdio", "video-pll", 0x204, BIT(30), 0);
 static CCU_GATE(gmac1_clk, "gmac1", "gmac-pll", 0x204, BIT(26), 0);
 static CCU_GATE(padctrl1_clk, "padctrl1", "perisys-apb-pclk", 0x204, BIT(24), 0);
@@ -758,6 +958,51 @@ static CCU_GATE(sram0_clk, "sram0", "axi-aclk", 0x20c, BIT(4), 0);
 static CCU_GATE(sram1_clk, "sram1", "axi-aclk", 0x20c, BIT(3), 0);
 static CCU_GATE(sram2_clk, "sram2", "axi-aclk", 0x20c, BIT(2), 0);
 static CCU_GATE(sram3_clk, "sram3", "axi-aclk", 0x20c, BIT(1), 0);
+=======
+static CCU_GATE(emmc_sdio_clk, "emmc-sdio", video_pll_clk_parent_data, 0x204, BIT(30), 0);
+static CCU_GATE(gmac1_clk, "gmac1", gmac_pll_clk_parent_data, 0x204, BIT(26), 0);
+static CCU_GATE(padctrl1_clk, "padctrl1", perisys_apb_pclk_parent_data, 0x204, BIT(24), 0);
+static CCU_GATE(dsmart_clk, "dsmart", perisys_apb_pclk_parent_data, 0x204, BIT(23), 0);
+static CCU_GATE(padctrl0_clk, "padctrl0", perisys_apb_pclk_parent_data, 0x204, BIT(22), 0);
+static CCU_GATE(gmac_axi_clk, "gmac-axi", axi4_cpusys2_aclk_parent_data, 0x204, BIT(21), 0);
+static CCU_GATE(gpio3_clk, "gpio3-clk", peri2sys_apb_pclk_parent_data, 0x204, BIT(20), 0);
+static CCU_GATE(gmac0_clk, "gmac0", gmac_pll_clk_parent_data, 0x204, BIT(19), 0);
+static CCU_GATE(pwm_clk, "pwm", perisys_apb_pclk_parent_data, 0x204, BIT(18), 0);
+static CCU_GATE(qspi0_clk, "qspi0", video_pll_clk_parent_data, 0x204, BIT(17), 0);
+static CCU_GATE(qspi1_clk, "qspi1", video_pll_clk_parent_data, 0x204, BIT(16), 0);
+static CCU_GATE(spi_clk, "spi", video_pll_clk_parent_data, 0x204, BIT(15), 0);
+static CCU_GATE(uart0_pclk, "uart0-pclk", perisys_apb_pclk_parent_data, 0x204, BIT(14), 0);
+static CCU_GATE(uart1_pclk, "uart1-pclk", perisys_apb_pclk_parent_data, 0x204, BIT(13), 0);
+static CCU_GATE(uart2_pclk, "uart2-pclk", perisys_apb_pclk_parent_data, 0x204, BIT(12), 0);
+static CCU_GATE(uart3_pclk, "uart3-pclk", perisys_apb_pclk_parent_data, 0x204, BIT(11), 0);
+static CCU_GATE(uart4_pclk, "uart4-pclk", perisys_apb_pclk_parent_data, 0x204, BIT(10), 0);
+static CCU_GATE(uart5_pclk, "uart5-pclk", perisys_apb_pclk_parent_data, 0x204, BIT(9), 0);
+static CCU_GATE(gpio0_clk, "gpio0-clk", perisys_apb_pclk_parent_data, 0x204, BIT(8), 0);
+static CCU_GATE(gpio1_clk, "gpio1-clk", perisys_apb_pclk_parent_data, 0x204, BIT(7), 0);
+static CCU_GATE(gpio2_clk, "gpio2-clk", peri2sys_apb_pclk_parent_data, 0x204, BIT(6), 0);
+static CCU_GATE(i2c0_clk, "i2c0", perisys_apb_pclk_parent_data, 0x204, BIT(5), 0);
+static CCU_GATE(i2c1_clk, "i2c1", perisys_apb_pclk_parent_data, 0x204, BIT(4), 0);
+static CCU_GATE(i2c2_clk, "i2c2", perisys_apb_pclk_parent_data, 0x204, BIT(3), 0);
+static CCU_GATE(i2c3_clk, "i2c3", perisys_apb_pclk_parent_data, 0x204, BIT(2), 0);
+static CCU_GATE(i2c4_clk, "i2c4", perisys_apb_pclk_parent_data, 0x204, BIT(1), 0);
+static CCU_GATE(i2c5_clk, "i2c5", perisys_apb_pclk_parent_data, 0x204, BIT(0), 0);
+
+static CCU_GATE(spinlock_clk, "spinlock", ahb2_cpusys_hclk_parent_data, 0x208, BIT(10), 0);
+static CCU_GATE(dma_clk, "dma", axi4_cpusys2_aclk_parent_data, 0x208, BIT(8), 0);
+static CCU_GATE(mbox0_clk, "mbox0", apb3_cpusys_pclk_parent_data, 0x208, BIT(7), 0);
+static CCU_GATE(mbox1_clk, "mbox1", apb3_cpusys_pclk_parent_data, 0x208, BIT(6), 0);
+static CCU_GATE(mbox2_clk, "mbox2", apb3_cpusys_pclk_parent_data, 0x208, BIT(5), 0);
+static CCU_GATE(mbox3_clk, "mbox3", apb3_cpusys_pclk_parent_data, 0x208, BIT(4), 0);
+static CCU_GATE(wdt0_clk, "wdt0", apb3_cpusys_pclk_parent_data, 0x208, BIT(3), 0);
+static CCU_GATE(wdt1_clk, "wdt1", apb3_cpusys_pclk_parent_data, 0x208, BIT(2), 0);
+static CCU_GATE(timer0_clk, "timer0", apb3_cpusys_pclk_parent_data, 0x208, BIT(1), 0);
+static CCU_GATE(timer1_clk, "timer1", apb3_cpusys_pclk_parent_data, 0x208, BIT(0), 0);
+
+static CCU_GATE(sram0_clk, "sram0", axi_aclk_parent_data, 0x20c, BIT(4), 0);
+static CCU_GATE(sram1_clk, "sram1", axi_aclk_parent_data, 0x20c, BIT(3), 0);
+static CCU_GATE(sram2_clk, "sram2", axi_aclk_parent_data, 0x20c, BIT(2), 0);
+static CCU_GATE(sram3_clk, "sram3", axi_aclk_parent_data, 0x20c, BIT(1), 0);
+>>>>>>> 2ab11f8006b2 (clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks)
 
 static CLK_FIXED_FACTOR_HW(gmac_pll_clk_100m, "gmac-pll-clk-100m",
 			   &gmac_pll_clk.common.hw,
