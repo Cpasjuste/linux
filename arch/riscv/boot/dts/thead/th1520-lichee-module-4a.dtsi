@@ -98,5 +98,4 @@
 	gpio-line-names = "", "",
 			  "GPIO09",
 			  "GPIO10";
->>>>>>> riscv: dts: thead: Add Lichee Pi 4M GPIO line names
 };
