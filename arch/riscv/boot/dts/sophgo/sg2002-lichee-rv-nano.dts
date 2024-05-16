@@ -24,3 +24,16 @@
 &uart0 {
 	status = "okay";
 };
+
+pwm_clk: pwm-clk{
+	compatible = "fixed-clock";
+	clock-frequency = "100000000";
+	#clock-cells = <0>;
+}
+
+pwm0: pwm@3060000 {
+	compatible = "cvitek,cvi-pwm";
+	reg = <0x0 0x3060000 0x0 0x1000>;
+	clocks = <&pwm_clk>;
+	#pwm-cells = <4>;
+};
