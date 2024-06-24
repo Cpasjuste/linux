@@ -309,5 +309,14 @@
 			reg = <0x74000000 0x10000>;
 			interrupts-extended = <&cpu0_intc 3>, <&cpu0_intc 7>;
 		};
+
+		saradc: adc@30f0000 {
+			compatible = "sophgo,sophgo-saradc";
+			clocks = <&clk CLK_SARADC>;
+			clock-names = "saradc_clk";
+			interrupts = <100 IRQ_TYPE_LEVEL_HIGH>;
+			reg = <0x030F0000 0x1000>;
+			status = "okay";
+		};
 	};
 };
